@@ -1,13 +1,14 @@
 package addressbook;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookRequirements {
 
     String addressBookFileName;
     List<Person> personData = new ArrayList<>();
 
-    enum CompareType {FIRST_NAME}
+    enum CompareType {FIRST_NAME,LAST_NAME,ZIP,CITY,STATE}
 
     JsonFileOperations jsonFileOperations = new JsonFileOperations();
 
@@ -28,9 +29,10 @@ public class AddressBookRequirements {
             throw new AddressBookException("No Data", AddressBookException.ExceptionType.NO_DATA);
         }
         Comparator<Person> addressBookComparator = new AddressBookDataComparator().getComparator(compareType);
-        personData.stream()
-                  .sorted(addressBookComparator);
-        return personData;
+        List<Person> sortedAddressBookData = personData.stream()
+                                                       .sorted(addressBookComparator)
+                                                       .collect(Collectors.toList());
+        return sortedAddressBookData;
     }
 
     public int getSize() { return personData.size(); }

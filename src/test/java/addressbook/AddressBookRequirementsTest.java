@@ -54,4 +54,48 @@ public class AddressBookRequirementsTest {
         }
     }
 
+    @Test
+    public void givenAddressBook_whenSortedAccordingToLastName_shouldReturnSortedResults() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.LAST_NAME);
+            Assert.assertEquals("Naidu",sortedData.get(0).getLastName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenSortedAccordingToZip_shouldReturnSortedResults() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.ZIP);
+            Assert.assertEquals(5065432,sortedData.get(0).getZip());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenSortedAccordingToState_shouldReturnSortedResults() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.STATE);
+            Assert.assertEquals("Gujarat",sortedData.get(0).getState());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenSortedAccordingToCity_shouldReturnSortedResults() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.CITY);
+            Assert.assertEquals("Anantapur",sortedData.get(0).getCity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
