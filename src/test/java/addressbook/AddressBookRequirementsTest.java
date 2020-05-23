@@ -22,7 +22,7 @@ public class AddressBookRequirementsTest {
     }
 
     @Test
-    public void givenEmptyAddressBook_whenDataAdded_shouldIncreaseSizeBy1() {
+    public void givenAddressBook_whenNotFoundCreateAndAddData_shouldIncreaseSizeBy1() {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook1");
             addressBookRequirements.addPersonData("Arjun", "Chowdary", "Laxmi Colony", "Narsampet", "Sikkim", 764432, "+91-9356576189");
@@ -127,7 +127,7 @@ public class AddressBookRequirementsTest {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             int file = addressBookRequirements.getSize();
-            addressBookRequirements.editPersonData("Karan","Teachers Colony", "Manua", "Jammu", 781564, "+91-6545610251");
+            addressBookRequirements.editPersonData("Karan","Teachers Colony", "Manua", "Manyavar", 781564, "+91-6545610251");
             int updatedFile = addressBookRequirements.getSize();
             Assert.assertEquals(file,updatedFile);
         } catch (Exception e) {

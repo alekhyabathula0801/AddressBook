@@ -1,1 +1,11 @@
-[{"firstName":"Arjun","lastName":"Chowdary","address":"Laxmi Colony","city":"Narsampet","state":"Sikkim","zip":764432,"mobile":"+91-9356576189"}]
+[
+  {
+    "firstName": "Arjun",
+    "lastName": "Chowdary",
+    "address": "Laxmi Colony",
+    "city": "Narsampet",
+    "state": "Sikkim",
+    "zip": 764432,
+    "mobile": "+91-9356576189"
+  }
+]

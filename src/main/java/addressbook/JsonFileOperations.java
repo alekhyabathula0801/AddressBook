@@ -1,6 +1,7 @@
 package addressbook;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -38,7 +39,7 @@ public class JsonFileOperations {
     public void writeInJsonFile (List<Person> personData, String addressBookFileName) {
         try {
             String addressBookFilePath = "./src/test/resources/jsonfiles/"+addressBookFileName+".json";
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(personData);
             FileWriter writer = new FileWriter(addressBookFilePath);
             writer.write(json);
