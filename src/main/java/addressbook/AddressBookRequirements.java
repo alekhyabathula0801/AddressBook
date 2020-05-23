@@ -1,49 +1,36 @@
 package addressbook;
 
-import com.google.gson.Gson;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookRequirements {
 
     String addressBookFilePath;
-    List<Person> personData = new ArrayList<>();
+    List<Person> personData;
 
-    public AddressBookRequirements(String addressBookFilePath) {
+    enum CompareType {FIRST_NAME}
+
+    JsonFileOperations jsonFileOperations = new JsonFileOperations();
+
+    public AddressBookRequirements(String addressBookFilePath) throws AddressBookException {
         this.addressBookFilePath = addressBookFilePath;
-        this.loadAddressBookData();
-    }
-
-    public int loadAddressBookData() {
-        try {
-            Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(addressBookFilePath));
-            personData.addAll(Arrays.asList(gson.fromJson(reader, Person[].class)));
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return personData.size();
-    }
-
-    public void writeInJsonFile (List<Person> personData) {
-        try {
-            Gson gson = new Gson();
-            String json = gson.toJson(personData);
-            FileWriter writer = new FileWriter(addressBookFilePath);
-            writer.write(json);
-            writer.close();
-        } catch (IOException e) { }
+        personData = jsonFileOperations.loadAddressBookData(addressBookFilePath);
     }
 
     public void addPersonData(String firstName, String lastName, String address, String city, String state, int zip, String mobile) {
         personData.add(new Person(firstName,lastName,address,city,state,zip,mobile));
-        writeInJsonFile(personData);
+        jsonFileOperations.writeInJsonFile(personData,addressBookFilePath);
+    }
+
+    public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
+        if (personData == null || personData.size() == 0) {
+            throw new AddressBookException("No Data", AddressBookException.ExceptionType.NO_DATA);
+        }
+        Comparator<Person> addressBookComparator = new AddressBookDataComparator().getComparator(compareType);
+        List<Person> sortedAddressBookData = personData.stream()
+                                                       .sorted(addressBookComparator)
+                                                       .collect(Collectors.toList());
+        return sortedAddressBookData;
     }
 
     public int getSize(){

@@ -20,4 +20,31 @@ public class Person {
         this.mobile = mobile;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
 }
