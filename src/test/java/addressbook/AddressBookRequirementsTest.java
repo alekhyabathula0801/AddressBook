@@ -12,7 +12,7 @@ public class AddressBookRequirementsTest {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             int file = addressBookRequirements.getSize();
-            addressBookRequirements.addPersonData("Snehita", "Naidu", "Anapurna Colony", "Dharmeshwaram", "Karnataka", 5065432, "+91-8356456613");
+            addressBookRequirements.addPersonData("Sam", "Reddy", "Ganga Colony", "Mehar", "Kerala", 871164, "+91-8715610681");
             int updatedFile = addressBookRequirements.getSize();
             Assert.assertEquals(file+1,updatedFile);
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class AddressBookRequirementsTest {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.LAST_NAME);
-            Assert.assertEquals("Naidu",sortedData.get(0).getLastName());
+            Assert.assertEquals("Chowdary",sortedData.get(0).getLastName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class AddressBookRequirementsTest {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.ZIP);
-            Assert.assertEquals(5065432,sortedData.get(0).getZip());
+            Assert.assertEquals(144462,sortedData.get(0).getZip());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +95,29 @@ public class AddressBookRequirementsTest {
             Assert.assertEquals("Anantapur",sortedData.get(0).getCity());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenDataDeleted_shouldDecreaseSizeBy1() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            int file = addressBookRequirements.getSize();
+            addressBookRequirements.deletePersonData("Sam");
+            int updatedFile = addressBookRequirements.getSize();
+            Assert.assertEquals(file-1,updatedFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenDataToDeletedIsNotFound_shouldThrowException() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            addressBookRequirements.deletePersonData("Kalyan");
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.INVALID_DATA,e.type);
         }
     }
 

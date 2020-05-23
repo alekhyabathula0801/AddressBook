@@ -35,6 +35,24 @@ public class AddressBookRequirements {
         return sortedAddressBookData;
     }
 
+    public int getIndexOfPerson(String firstName) {
+        int index = 0;
+        while (personData.size()>index) {
+            if (firstName.equals(personData.get(index).getFirstName()))
+                return index;
+            index++;
+        }
+        return -1;
+    }
+
+    public void deletePersonData(String firstName) throws AddressBookException {
+        int index = getIndexOfPerson(firstName);
+        if(index == -1)
+            throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
+        personData.remove(index);
+        jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
+    }
+
     public int getSize() { return personData.size(); }
 
 }
