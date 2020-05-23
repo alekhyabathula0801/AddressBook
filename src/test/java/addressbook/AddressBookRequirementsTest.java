@@ -7,14 +7,10 @@ import java.util.List;
 
 public class AddressBookRequirementsTest {
 
-    String ADDRESS_BOOK_FILE_PATH = "./src/test/resources/AddressBook.json";
-    String EMPTY_ADDRESS_BOOK_FILE_PATH = "./src/test/resources/AddressBookWithEmpty.json";
-    String WRONG_TYPE_ADDRESS_BOOK_FILE_PATH = "./src/test/resources/AddressBook.txt";
-
     @Test
-    public void givenAddressBookData_whenDataAdded_shouldIncreaseSizeBy1() {
+    public void givenAddressBook_whenDataAdded_shouldIncreaseSizeBy1() {
         try {
-            AddressBookRequirements addressBookRequirements = new AddressBookRequirements(ADDRESS_BOOK_FILE_PATH);
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             int file = addressBookRequirements.getSize();
             addressBookRequirements.addPersonData("Snehita", "Naidu", "Anapurna Colony", "Dharmeshwaram", "Karnataka", 5065432, "+91-8356456613");
             int updatedFile = addressBookRequirements.getSize();
@@ -25,30 +21,35 @@ public class AddressBookRequirementsTest {
     }
 
     @Test
-    public void givenEmptyFile_shouldThrowException() {
+    public void givenEmptyAddressBook_whenDataAdded_shouldIncreaseSizeBy1() {
         try {
-            new AddressBookRequirements(EMPTY_ADDRESS_BOOK_FILE_PATH);
-        } catch (AddressBookException e) {
-            Assert.assertEquals(AddressBookException.ExceptionType.ADDRESS_BOOK_FILE_PROBLEM,e.type);
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook1");
+            addressBookRequirements.addPersonData("Arjun", "Chowdary", "Laxmi Colony", "Narsampet", "Sikkim", 764432, "+91-9356576189");
+            int updatedFile = addressBookRequirements.getSize();
+            Assert.assertEquals(1,updatedFile);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Test
-    public void givenWrongTypeFile_shouldThrowException() {
+    public void givenAddressBook_whenSortedAccordingToFirstName_shouldReturnSortedResults() {
         try {
-            new AddressBookRequirements(WRONG_TYPE_ADDRESS_BOOK_FILE_PATH);
-        } catch (AddressBookException e) {
-            Assert.assertEquals(AddressBookException.ExceptionType.ADDRESS_BOOK_FILE_PROBLEM,e.type);
-        }
-    }
-
-    @Test
-    public void givenAddressBookData_whenSorted_shouldReturnSortedResults() {
-        try {
-            AddressBookRequirements addressBookRequirements = new AddressBookRequirements(ADDRESS_BOOK_FILE_PATH);
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             List<Person> sortedData = addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.FIRST_NAME);
             Assert.assertEquals("Anu",sortedData.get(0).getFirstName());
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenEmptyAddressBookToSort_shouldThrowException() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBookEmpty");
+            addressBookRequirements.getSortedData(AddressBookRequirements.CompareType.FIRST_NAME);
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.NO_DATA,e.type);
             e.printStackTrace();
         }
     }

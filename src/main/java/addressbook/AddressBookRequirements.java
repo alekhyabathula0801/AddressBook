@@ -1,25 +1,26 @@
 package addressbook;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AddressBookRequirements {
 
-    String addressBookFilePath;
-    List<Person> personData;
+    String addressBookFileName;
+    List<Person> personData = new ArrayList<>();
 
     enum CompareType {FIRST_NAME}
 
     JsonFileOperations jsonFileOperations = new JsonFileOperations();
 
-    public AddressBookRequirements(String addressBookFilePath) throws AddressBookException {
-        this.addressBookFilePath = addressBookFilePath;
-        personData = jsonFileOperations.loadAddressBookData(addressBookFilePath);
+    public AddressBookRequirements(String addressBookFileName) throws AddressBookException {
+        this.addressBookFileName = addressBookFileName;
+        if(jsonFileOperations.getFileStatus(addressBookFileName))
+            personData = jsonFileOperations.loadAddressBookData(addressBookFileName);
     }
 
-    public void addPersonData(String firstName, String lastName, String address, String city, String state, int zip, String mobile) {
-        personData.add(new Person(firstName,lastName,address,city,state,zip,mobile));
-        jsonFileOperations.writeInJsonFile(personData,addressBookFilePath);
+    public void addPersonData(String firstName, String lastName, String address, String city, String state,
+                                                                                              int zip, String mobile) {
+        personData.add(new Person(firstName, lastName, address, city, state, zip, mobile));
+        jsonFileOperations.writeInJsonFile(personData, addressBookFileName);
     }
 
     public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
@@ -27,14 +28,11 @@ public class AddressBookRequirements {
             throw new AddressBookException("No Data", AddressBookException.ExceptionType.NO_DATA);
         }
         Comparator<Person> addressBookComparator = new AddressBookDataComparator().getComparator(compareType);
-        List<Person> sortedAddressBookData = personData.stream()
-                                                       .sorted(addressBookComparator)
-                                                       .collect(Collectors.toList());
-        return sortedAddressBookData;
+        personData.stream()
+                  .sorted(addressBookComparator);
+        return personData;
     }
 
-    public int getSize(){
-       return personData.size();
-    }
+    public int getSize() { return personData.size(); }
 
 }

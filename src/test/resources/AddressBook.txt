@@ -1,1 +1,0 @@
-"firstName":"Anu","lastName":"Pandey","address":"Rama Colony","city":"Anantapur","state":"Gujarat","zip":8765432,"mobile":"91+1234456678"

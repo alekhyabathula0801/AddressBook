@@ -9,11 +9,12 @@ public class AddressBookDataComparator {
                                                             new EnumMap<>(AddressBookRequirements.CompareType.class);
 
     static {
-        addressBookComparator.put(AddressBookRequirements.CompareType.FIRST_NAME,Comparator.comparing(iplData -> iplData.getFirstName()));
-
+        addressBookComparator.put(AddressBookRequirements.CompareType.FIRST_NAME,Comparator.comparing(iplData ->
+                                                                                            iplData.getFirstName()));
     }
 
     public Comparator<Person> getComparator(AddressBookRequirements.CompareType compareType) {
         return addressBookComparator.get(compareType);
     }
+
 }
