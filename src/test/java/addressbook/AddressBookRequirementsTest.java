@@ -8,13 +8,14 @@ import java.util.List;
 public class AddressBookRequirementsTest {
 
     @Test
-    public void givenAddressBook_whenDataAdded_shouldIncreaseSizeBy1() {
+    public void givenAddressBook_whenDataAdded_shouldIncreaseSizeBy2() {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             int file = addressBookRequirements.getSize();
             addressBookRequirements.addPersonData("Sam", "Reddy", "Ganga Colony", "Mehar", "Kerala", 871164, "+91-8715610681");
+            addressBookRequirements.addPersonData("Karan", "Shetty", "Yamuna Colony", "Mangua", "Jammu", 781164, "+91-6545610251");
             int updatedFile = addressBookRequirements.getSize();
-            Assert.assertEquals(file+1,updatedFile);
+            Assert.assertEquals(file+2,updatedFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +117,29 @@ public class AddressBookRequirementsTest {
         try {
             AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
             addressBookRequirements.deletePersonData("Kalyan");
+        } catch (AddressBookException e) {
+            Assert.assertEquals(AddressBookException.ExceptionType.INVALID_DATA,e.type);
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenDataEdited_shouldReturnSameSize() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            int file = addressBookRequirements.getSize();
+            addressBookRequirements.editPersonData("Karan","Teachers Colony", "Manua", "Jammu", 781564, "+91-6545610251");
+            int updatedFile = addressBookRequirements.getSize();
+            Assert.assertEquals(file,updatedFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenAddressBook_whenDataToEditIsNotFound_shouldThrowException() {
+        try {
+            AddressBookRequirements addressBookRequirements = new AddressBookRequirements("AddressBook");
+            addressBookRequirements.editPersonData("Kalyan","Sai Ram Colony", "Kazipet", "Kashmir", 876365, "+91-9875610251");
         } catch (AddressBookException e) {
             Assert.assertEquals(AddressBookException.ExceptionType.INVALID_DATA,e.type);
         }

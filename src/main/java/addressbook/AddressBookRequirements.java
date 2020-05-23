@@ -53,6 +53,18 @@ public class AddressBookRequirements {
         jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
     }
 
+    public void editPersonData(String firstName, String address, String city, String state, int zip, String mobile) throws AddressBookException {
+        int index = getIndexOfPerson(firstName);
+        if(index == -1)
+            throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
+        personData.get(index).setAddress(address);
+        personData.get(index).setCity(city);
+        personData.get(index).setState(state);
+        personData.get(index).setZip(zip);
+        personData.get(index).setMobile(mobile);
+        jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
+    }
+
     public int getSize() { return personData.size(); }
 
 }
