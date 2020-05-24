@@ -8,16 +8,16 @@ public class Person {
     private String city;
     private String state;
     private int zip;
-    private String mobile;
+    private String mobileNumber;
 
-    public Person(String firstName, String lastName, String address, String city, String state, int zip, String mobile) {
+    public Person(String firstName, String lastName, String address, String city, String state, int zip, String mobileNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zip = zip;
-        this.mobile = mobile;
+        this.mobileNumber = mobileNumber;
     }
 
     public String getFirstName() {
@@ -44,8 +44,8 @@ public class Person {
         return zip;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
     public void setFirstName(String firstName) {
@@ -72,8 +72,8 @@ public class Person {
         this.zip = zip;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
 }

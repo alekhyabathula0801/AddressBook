@@ -3,7 +3,7 @@ package addressbook;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AddressBookRequirements {
+public class AddressBook {
 
     String addressBookFileName;
     List<Person> personData = new ArrayList<>();
@@ -12,7 +12,7 @@ public class AddressBookRequirements {
 
     JsonFileOperations jsonFileOperations = new JsonFileOperations();
 
-    public AddressBookRequirements(String addressBookFileName) throws AddressBookException {
+    public AddressBook(String addressBookFileName) throws AddressBookException {
         this.addressBookFileName = addressBookFileName;
         if(jsonFileOperations.getFileStatus(addressBookFileName))
             personData = jsonFileOperations.loadAddressBookData(addressBookFileName);
@@ -35,33 +35,34 @@ public class AddressBookRequirements {
         return sortedAddressBookData;
     }
 
-    public int getIndexOfPerson(String firstName) {
+    public int getIndexOfPerson(String mobileNumber) {
         int index = 0;
         while (personData.size()>index) {
-            if (firstName.equals(personData.get(index).getFirstName()))
+            if (mobileNumber.equals(personData.get(index).getMobileNumber()))
                 return index;
             index++;
         }
         return -1;
     }
 
-    public void deletePersonData(String firstName) throws AddressBookException {
-        int index = getIndexOfPerson(firstName);
+    public void deletePersonData(String mobileNumber) throws AddressBookException {
+        int index = getIndexOfPerson(mobileNumber);
         if(index == -1)
             throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
         personData.remove(index);
         jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
     }
 
-    public void editPersonData(String firstName, String address, String city, String state, int zip, String mobile) throws AddressBookException {
-        int index = getIndexOfPerson(firstName);
+    public void editPersonData(String mobileNumberToEdit, String address, String city, String state, int zip,
+                               String mobileNumber) throws AddressBookException {
+        int index = getIndexOfPerson(mobileNumberToEdit);
         if(index == -1)
             throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
         personData.get(index).setAddress(address);
         personData.get(index).setCity(city);
         personData.get(index).setState(state);
         personData.get(index).setZip(zip);
-        personData.get(index).setMobile(mobile);
+        personData.get(index).setMobileNumber(mobileNumber);
         jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
     }
 

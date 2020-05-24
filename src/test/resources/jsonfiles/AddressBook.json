@@ -6,7 +6,7 @@
     "city": "Anantapur",
     "state": "Gujarat",
     "zip": 8765432,
-    "mobile": "91+1234456678"
+    "mobileNumber": "+91-7965610276"
   },
   {
     "firstName": "Snehita",
@@ -15,7 +15,7 @@
     "city": "Dharmeshwaram",
     "state": "Karnataka",
     "zip": 5065432,
-    "mobile": "+91-8356456613"
+    "mobileNumber": "+91-1234567890"
   },
   {
     "firstName": "Arjun",
@@ -24,7 +24,7 @@
     "city": "Narsampet",
     "state": "Sikkim",
     "zip": 764432,
-    "mobile": "+91-9356576189"
+    "mobileNumber": "+91-9876543021"
   },
   {
     "firstName": "Sana",
@@ -33,7 +33,7 @@
     "city": "Sirpur",
     "state": "Karnataka",
     "zip": 144462,
-    "mobile": "+91-6456510618"
+    "mobileNumber": "+91-6890754321"
   },
   {
     "firstName": "Kiran",
@@ -42,24 +42,15 @@
     "city": "Jangoan",
     "state": "Manipur",
     "zip": 384162,
-    "mobile": "+91-7832510618"
-  },
-  {
-    "firstName": "Sam",
-    "lastName": "Reddy",
-    "address": "Ganga Colony",
-    "city": "Mehar",
-    "state": "Kerala",
-    "zip": 871164,
-    "mobile": "+91-8715610681"
+    "mobileNumber": "+91-1023987654"
   },
   {
     "firstName": "Karan",
     "lastName": "Shetty",
     "address": "Teachers Colony",
-    "city": "Manua",
+    "city": "Magua",
     "state": "Manyavar",
     "zip": 781564,
-    "mobile": "+91-6545610251"
+    "mobileNumber": "+91-7945610243"
   }
 ]
