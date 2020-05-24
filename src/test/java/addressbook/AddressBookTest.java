@@ -43,8 +43,7 @@ public class AddressBookTest {
             addressBook.getSortedData(AddressBook.CompareType.FIRST_NAME);
         } catch (AddressBookException e) {
             Assert.assertEquals(AddressBookException.ExceptionType.NO_DATA,e.type);
-            e.printStackTrace();
-        }
+            }
     }
 
     @Test
@@ -148,7 +147,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void givenAddressBook_whenNewFileOpenAddData_shouldIncreaseSizeBy1() {
+    public void givenAddressBookToCreateNewFile_whenDataAdded_shouldReturnSizeAs1() {
         try {
             AddressBook addressBook = new AddressBook();
             addressBook.createNewAddressBook("NewAddressBook");
@@ -170,7 +169,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void givenAddressBook_whenOpenAndAddedData_shouldIncreaseSizeBy1() {
+    public void givenAddressBookToOpenFile_whenDataAdded_shouldIncreaseSizeBy1() {
         try {
             AddressBook addressBook = new AddressBook();
             addressBook.openAddressBook("AddressBook");
@@ -183,7 +182,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void givenAddressBookToOpenFile_whenFileDoesntExists_shouldThrowException() {
+    public void givenAddressBookToOpenFile_whenFileNotFound_shouldThrowException() {
         try {
             AddressBook addressBook = new AddressBook();
             addressBook.openAddressBook("NoAddressBook");
@@ -203,7 +202,7 @@ public class AddressBookTest {
             addressBook.openAddressBook("UpdatedAddressBook");
             int updatedSize = addressBook.getSize();
             Assert.assertEquals(size+1,updatedSize);
-        } catch (AddressBookException e) { }
+        } catch (AddressBookException e) { e.printStackTrace(); }
     }
 
     @Test

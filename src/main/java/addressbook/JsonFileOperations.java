@@ -13,35 +13,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class JsonFileOperations {
+public class JsonFileOperations<E> implements IFileOperations<E> {
 
-    public boolean getFileStatus(String addressBookFileName) {
-        String addressBookFilePath = "./src/test/resources/jsonfiles/"+addressBookFileName+".json";
-        if(new File(addressBookFilePath).exists())
+    public boolean getFileStatus(String fileName) {
+        String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
+        if(new File(filePath).exists())
             return true;
         return false;
     }
 
-    public List<Person> loadAddressBookData(String addressBookFileName) throws AddressBookException {
-        List<Person> personData = new ArrayList<>();
+    public List<Person> loadDataFromFile(String fileName) throws AddressBookException {
+        List<Person> data = new ArrayList<>();
         try {
-            String addressBookFilePath = "./src/test/resources/jsonfiles/"+addressBookFileName+".json";
+            String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(addressBookFilePath));
-            personData.addAll(Arrays.asList(gson.fromJson(reader, Person[].class)));
+            Reader reader = Files.newBufferedReader(Paths.get(filePath));
+            data.addAll(Arrays.asList(gson.fromJson(reader, Person[].class)));
             reader.close();
         } catch (Exception e) {
             throw  new AddressBookException("Invalid File", AddressBookException.ExceptionType.ADDRESS_BOOK_FILE_PROBLEM);
         }
-        return personData;
+        return data;
     }
 
-    public void writeInJsonFile (List<Person> personData, String addressBookFileName) {
+    public <E> void writeInFile(List<E> data, String fileName) {
         try {
-            String addressBookFilePath = "./src/test/resources/jsonfiles/"+addressBookFileName+".json";
+            String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(personData);
-            FileWriter writer = new FileWriter(addressBookFilePath);
+            String json = gson.toJson(data);
+            FileWriter writer = new FileWriter(filePath);
             writer.write(json);
             writer.close();
         } catch (IOException e) { }
