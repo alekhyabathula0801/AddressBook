@@ -12,16 +12,32 @@ public class AddressBook {
 
     JsonFileOperations jsonFileOperations = new JsonFileOperations();
 
-    public AddressBook(String addressBookFileName) throws AddressBookException {
+    public AddressBook(String addressBookFileName) {
         this.addressBookFileName = addressBookFileName;
+    }
+
+    public void createNewAddressBook() throws AddressBookException {
         if(jsonFileOperations.getFileStatus(addressBookFileName))
-            personData = jsonFileOperations.loadAddressBookData(addressBookFileName);
+            throw new AddressBookException("File Exists", AddressBookException.ExceptionType.FILE_EXISTS);
+    }
+
+    public void openAddressBook() throws AddressBookException {
+        if(!jsonFileOperations.getFileStatus(addressBookFileName))
+            throw new AddressBookException("File Not Present", AddressBookException.ExceptionType.FILE_DOESNT_EXISTS);
+        personData = jsonFileOperations.loadAddressBookData(addressBookFileName);
+    }
+
+    public void save() {
+        jsonFileOperations.writeInJsonFile(personData, addressBookFileName);
+    }
+
+    public void saveAs(String addressBookFileName) {
+        jsonFileOperations.writeInJsonFile(personData, addressBookFileName);
     }
 
     public void addPersonData(String firstName, String lastName, String address, String city, String state,
                                                                                               int zip, String mobile) {
         personData.add(new Person(firstName, lastName, address, city, state, zip, mobile));
-        jsonFileOperations.writeInJsonFile(personData, addressBookFileName);
     }
 
     public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
@@ -50,7 +66,6 @@ public class AddressBook {
         if(index == -1)
             throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
         personData.remove(index);
-        jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
     }
 
     public void editPersonData(String mobileNumberToEdit, String address, String city, String state, int zip,
@@ -63,7 +78,6 @@ public class AddressBook {
         personData.get(index).setState(state);
         personData.get(index).setZip(zip);
         personData.get(index).setMobileNumber(mobileNumber);
-        jsonFileOperations.writeInJsonFile(personData,addressBookFileName);
     }
 
     public int getSize() { return personData.size(); }

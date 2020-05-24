@@ -61,5 +61,14 @@
     "state": "Kashmir",
     "zip": 876365,
     "mobileNumber": "+91-9875610251"
+  },
+  {
+    "firstName": "Varun",
+    "lastName": "Shastri",
+    "address": "Sai Reddy Colony",
+    "city": "Noida",
+    "state": "UP",
+    "zip": 768365,
+    "mobileNumber": "+91-7021610251"
   }
 ]

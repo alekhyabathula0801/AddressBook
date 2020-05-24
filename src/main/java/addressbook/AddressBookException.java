@@ -1,7 +1,7 @@
 package addressbook;
 
 public class AddressBookException extends Exception {
-    enum ExceptionType {NO_DATA,ADDRESS_BOOK_FILE_PROBLEM,INVALID_DATA}
+    enum ExceptionType {NO_DATA,ADDRESS_BOOK_FILE_PROBLEM,INVALID_DATA,FILE_EXISTS,FILE_DOESNT_EXISTS}
 
     ExceptionType type;
 
