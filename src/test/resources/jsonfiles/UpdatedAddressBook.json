@@ -1,6 +1,6 @@
 [
   {
-    "firstName": "Anu",
+    "firstName": "Abhi",
     "lastName": "Pandey",
     "address": "Rama Colony",
     "city": "Anantapur",
@@ -52,6 +52,15 @@
     "state": "Manyavar",
     "zip": 781564,
     "mobileNumber": "+91-7945610243"
+  },
+  {
+    "firstName": "Karan",
+    "lastName": "Shetty",
+    "address": "Sri Nagar Colony",
+    "city": "Hanvar",
+    "state": "Maharastra",
+    "zip": 234564,
+    "mobileNumber": "+91-6545610240"
   },
   {
     "firstName": "Anju",

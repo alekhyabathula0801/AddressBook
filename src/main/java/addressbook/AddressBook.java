@@ -12,16 +12,14 @@ public class AddressBook {
 
     JsonFileOperations jsonFileOperations = new JsonFileOperations();
 
-    public AddressBook(String addressBookFileName) {
+    public void createNewAddressBook(String addressBookFileName) throws AddressBookException {
         this.addressBookFileName = addressBookFileName;
-    }
-
-    public void createNewAddressBook() throws AddressBookException {
         if(jsonFileOperations.getFileStatus(addressBookFileName))
             throw new AddressBookException("File Exists", AddressBookException.ExceptionType.FILE_EXISTS);
     }
 
-    public void openAddressBook() throws AddressBookException {
+    public void openAddressBook(String addressBookFileName) throws AddressBookException {
+        this.addressBookFileName = addressBookFileName;
         if(!jsonFileOperations.getFileStatus(addressBookFileName))
             throw new AddressBookException("File Not Present", AddressBookException.ExceptionType.FILE_DOESNT_EXISTS);
         personData = jsonFileOperations.loadAddressBookData(addressBookFileName);
@@ -36,8 +34,11 @@ public class AddressBook {
     }
 
     public void addPersonData(String firstName, String lastName, String address, String city, String state,
-                                                                                              int zip, String mobile) {
-        personData.add(new Person(firstName, lastName, address, city, state, zip, mobile));
+                              int zip, String mobileNumber) throws AddressBookException {
+        int index = getIndexOfPerson(mobileNumber);
+        if(index != -1)
+            throw new AddressBookException("Data not found", AddressBookException.ExceptionType.DATA_EXISTS);
+        personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
     }
 
     public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
