@@ -47,6 +47,15 @@
   {
     "firstName": "Karan",
     "lastName": "Shetty",
+    "address": "Teachers Colony",
+    "city": "Magua",
+    "state": "Manyavar",
+    "zip": 781564,
+    "mobileNumber": "+91-7945610243"
+  },
+  {
+    "firstName": "Karan",
+    "lastName": "Shetty",
     "address": "Sri Nagar Colony",
     "city": "Hanvar",
     "state": "Maharastra",

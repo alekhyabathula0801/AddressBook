@@ -10,35 +10,41 @@ public class AddressBook {
 
     enum CompareType {FIRST_NAME,LAST_NAME,ZIP,CITY,STATE}
 
-    IFileOperations fileOperation = FileFactory.getFileOperations();
-
-    public void createNewAddressBook(String addressBookFileName) throws AddressBookException {
+    public void newFile(String addressBookFileName) throws AddressBookException {
         this.addressBookFileName = addressBookFileName;
-        if(fileOperation.getFileStatus(addressBookFileName))
+        if(FileFactory.getFileOperations().getFileStatus(addressBookFileName))
             throw new AddressBookException("File Exists", AddressBookException.ExceptionType.FILE_EXISTS);
     }
 
-    public void openAddressBook(String addressBookFileName) throws AddressBookException {
+    public void open(String addressBookFileName) throws AddressBookException {
         this.addressBookFileName = addressBookFileName;
-        if(!fileOperation.getFileStatus(addressBookFileName))
+        if(!FileFactory.getFileOperations().getFileStatus(addressBookFileName))
             throw new AddressBookException("File Not Present", AddressBookException.ExceptionType.FILE_DOESNT_EXISTS);
-        personData = fileOperation.loadDataFromFile(addressBookFileName);
+        personData = FileFactory.getFileOperations().loadDataFromFile(addressBookFileName);
     }
 
     public void save() {
-        fileOperation.writeInFile(personData, addressBookFileName);
+        FileFactory.getFileOperations().writeInFile(personData, addressBookFileName);
     }
 
-    public void saveAs(String addressBookFileName) {
-        fileOperation.writeInFile(personData, addressBookFileName);
+    public void saveAs(String addressBookFileName) throws AddressBookException {
+        if(FileFactory.getFileOperations().getFileStatus(addressBookFileName))
+            throw new AddressBookException("File Present", AddressBookException.ExceptionType.FILE_EXISTS);
+        FileFactory.getFileOperations().writeInFile(personData, addressBookFileName);
     }
 
-    public void addPersonData(String firstName, String lastName, String address, String city, String state, int zip,
-                              String mobileNumber) throws AddressBookException {
-        int index = getIndexOfPerson(mobileNumber);
-        if(index != -1)
-            throw new AddressBookException("Data Exists", AddressBookException.ExceptionType.DATA_EXISTS);
-        personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
+    public void add(String firstName, String lastName, String address, String city, String state, int zip,
+                    String mobileNumber) throws AddressBookException {
+        try {
+            if (firstName == "" | lastName == "" | address == "" | city == "" | state == "" | mobileNumber == "")
+                throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+            int index = getIndex(mobileNumber);
+            if (index != -1)
+                throw new AddressBookException("Data Exists", AddressBookException.ExceptionType.DATA_EXISTS);
+            personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
+        } catch (NullPointerException e) {
+            throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
+        }
     }
 
     public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
@@ -52,7 +58,7 @@ public class AddressBook {
         return sortedAddressBookData;
     }
 
-    public int getIndexOfPerson(String mobileNumber) {
+    private int getIndex(String mobileNumber) {
         int index = 0;
         while (personData.size()>index) {
             if (mobileNumber.equals(personData.get(index).getMobileNumber()))
@@ -62,25 +68,39 @@ public class AddressBook {
         return -1;
     }
 
-    public void deletePersonData(String mobileNumber) throws AddressBookException {
-        int index = getIndexOfPerson(mobileNumber);
-        if(index == -1)
-            throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
-        personData.remove(index);
+    public void delete(String mobileNumber) throws AddressBookException {
+        try {
+            if (mobileNumber == "")
+                throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+            int index = getIndex(mobileNumber);
+            if(index == -1)
+                throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
+            personData.remove(index);
+        } catch (NullPointerException e) {
+            throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
+        }
     }
 
-    public void editPersonData(String mobileNumberToEdit, String address, String city, String state, int zip,
-                               String mobileNumber) throws AddressBookException {
-        int index = getIndexOfPerson(mobileNumberToEdit);
-        if(index == -1)
-            throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
-        personData.get(index).setAddress(address);
-        personData.get(index).setCity(city);
-        personData.get(index).setState(state);
-        personData.get(index).setZip(zip);
-        personData.get(index).setMobileNumber(mobileNumber);
+    public void edit(String mobileNumberToEdit, String address, String city, String state, int zip,
+                     String mobileNumber) throws AddressBookException {
+        try {
+            if (mobileNumberToEdit == "" | address == "" | city == "" | state == "" | mobileNumber == "")
+                throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+            int index = getIndex(mobileNumberToEdit);
+            if(index == -1)
+                throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
+            personData.get(index).setAddress(address);
+            personData.get(index).setCity(city);
+            personData.get(index).setState(state);
+            personData.get(index).setZip(zip);
+            personData.get(index).setMobileNumber(mobileNumber);
+        } catch (NullPointerException e) {
+            throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
+        }
     }
 
-    public int getSize() { return personData.size(); }
+    public int getSize() {
+        return personData.size();
+    }
 
 }

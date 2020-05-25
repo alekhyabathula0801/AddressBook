@@ -10,7 +10,7 @@ public class Person {
     private int zip;
     private String mobileNumber;
 
-    public Person(String firstName, String lastName, String address, String city, String state, int zip, String mobileNumber) {
+    public Person(String firstName, String lastName, String address, String city, String state, int zip, String mobileNumber) throws AddressBookException{
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

@@ -15,8 +15,18 @@ import java.util.List;
 
 public class JsonFileOperations<E> implements IFileOperations<E> {
 
-    public boolean getFileStatus(String fileName) {
-        String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
+    public String getFilePath(String fileName) throws AddressBookException {
+        try{
+            if (fileName.equals(""))
+                throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
+             return  "./src/test/resources/jsonfiles/"+fileName+".json";
+        } catch (NullPointerException  e) {
+            throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_NULL);
+        }
+    }
+
+    public boolean getFileStatus(String fileName) throws AddressBookException {
+        String filePath = getFilePath(fileName);
         if(new File(filePath).exists())
             return true;
         return false;
@@ -25,7 +35,7 @@ public class JsonFileOperations<E> implements IFileOperations<E> {
     public List<Person> loadDataFromFile(String fileName) throws AddressBookException {
         List<Person> data = new ArrayList<>();
         try {
-            String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
+            String filePath = getFilePath(fileName);
             Gson gson = new Gson();
             Reader reader = Files.newBufferedReader(Paths.get(filePath));
             data.addAll(Arrays.asList(gson.fromJson(reader, Person[].class)));
@@ -38,13 +48,13 @@ public class JsonFileOperations<E> implements IFileOperations<E> {
 
     public <E> void writeInFile(List<E> data, String fileName) {
         try {
-            String filePath = "./src/test/resources/jsonfiles/"+fileName+".json";
+            String filePath = getFilePath(fileName);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(data);
             FileWriter writer = new FileWriter(filePath);
             writer.write(json);
             writer.close();
-        } catch (IOException e) { }
+        } catch (IOException | AddressBookException e) { }
     }
 
 }
