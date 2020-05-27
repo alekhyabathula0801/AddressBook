@@ -5,33 +5,9 @@ import java.util.stream.Collectors;
 
 public class AddressBook {
 
-    String addressBookFileName;
     List<Person> personData = new ArrayList<>();
 
     enum CompareType {FIRST_NAME,LAST_NAME,ZIP,CITY,STATE}
-
-    public void newFile(String addressBookFileName) throws AddressBookException {
-        this.addressBookFileName = addressBookFileName;
-        if(FileFactory.getFileOperations().getFileStatus(addressBookFileName))
-            throw new AddressBookException("File Exists", AddressBookException.ExceptionType.FILE_EXISTS);
-    }
-
-    public void open(String addressBookFileName) throws AddressBookException {
-        this.addressBookFileName = addressBookFileName;
-        if(!FileFactory.getFileOperations().getFileStatus(addressBookFileName))
-            throw new AddressBookException("File Not Present", AddressBookException.ExceptionType.FILE_DOESNT_EXISTS);
-        personData = FileFactory.getFileOperations().loadDataFromFile(addressBookFileName);
-    }
-
-    public void save() {
-        FileFactory.getFileOperations().writeInFile(personData, addressBookFileName);
-    }
-
-    public void saveAs(String addressBookFileName) throws AddressBookException {
-        if(FileFactory.getFileOperations().getFileStatus(addressBookFileName))
-            throw new AddressBookException("File Present", AddressBookException.ExceptionType.FILE_EXISTS);
-        FileFactory.getFileOperations().writeInFile(personData, addressBookFileName);
-    }
 
     public void add(String firstName, String lastName, String address, String city, String state, int zip,
                     String mobileNumber) throws AddressBookException {
@@ -100,7 +76,7 @@ public class AddressBook {
     }
 
     public int getSize() {
-        return personData.size();
+        return this.personData.size();
     }
 
 }

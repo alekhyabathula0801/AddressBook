@@ -15,13 +15,13 @@ import java.util.List;
 
 public class JsonFileOperations<E> implements IFileOperations<E> {
 
-    public String getFilePath(String fileName) throws AddressBookException {
+    private String getFilePath(String fileName) throws AddressBookException {
         try{
             if (fileName.equals(""))
                 throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
              return  "./src/test/resources/jsonfiles/"+fileName+".json";
         } catch (NullPointerException  e) {
-            throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_NULL);
+            throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
 
@@ -40,13 +40,13 @@ public class JsonFileOperations<E> implements IFileOperations<E> {
             Reader reader = Files.newBufferedReader(Paths.get(filePath));
             data.addAll(Arrays.asList(gson.fromJson(reader, Person[].class)));
             reader.close();
-        } catch (Exception e) {
-            throw  new AddressBookException("Invalid File", AddressBookException.ExceptionType.ADDRESS_BOOK_FILE_PROBLEM);
+        } catch (IOException | RuntimeException e) {
+            throw  new AddressBookException("Invalid File", AddressBookException.ExceptionType.FILE_PROBLEM);
         }
         return data;
     }
 
-    public <E> void writeInFile(List<E> data, String fileName) {
+    public <E> void writeInFile(List<E> data, String fileName) throws AddressBookException {
         try {
             String filePath = getFilePath(fileName);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -54,7 +54,9 @@ public class JsonFileOperations<E> implements IFileOperations<E> {
             FileWriter writer = new FileWriter(filePath);
             writer.write(json);
             writer.close();
-        } catch (IOException | AddressBookException e) { }
+        } catch (IOException e) {
+            throw  new AddressBookException("Invalid File", AddressBookException.ExceptionType.FILE_PROBLEM);
+        }
     }
 
 }
