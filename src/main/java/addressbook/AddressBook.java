@@ -2,6 +2,7 @@ package addressbook;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AddressBook {
 
@@ -17,16 +18,15 @@ public class AddressBook {
             int index = getIndex(mobileNumber);
             if (index != -1)
                 throw new AddressBookException("Data Exists", AddressBookException.ExceptionType.DATA_EXISTS);
-            personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
+            this.personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
 
     public List<Person> getSortedData(CompareType compareType) throws AddressBookException {
-        if (personData == null || personData.size() == 0) {
+        if (this.personData == null || this.personData.size() == 0)
             throw new AddressBookException("No Data", AddressBookException.ExceptionType.NO_DATA);
-        }
         Comparator<Person> addressBookComparator = new AddressBookDataComparator().getComparator(compareType);
         List<Person> sortedAddressBookData = personData.stream()
                                                        .sorted(addressBookComparator)
@@ -35,13 +35,10 @@ public class AddressBook {
     }
 
     private int getIndex(String mobileNumber) {
-        int index = 0;
-        while (personData.size()>index) {
-            if (mobileNumber.equals(personData.get(index).getMobileNumber()))
-                return index;
-            index++;
-        }
-        return -1;
+        return IntStream.range(0,this.personData.size())
+                        .filter(index -> mobileNumber.equals(this.personData.get(index).getMobileNumber()))
+                        .findFirst()
+                        .orElse(-1);
     }
 
     public void delete(String mobileNumber) throws AddressBookException {
@@ -51,7 +48,7 @@ public class AddressBook {
             int index = getIndex(mobileNumber);
             if(index == -1)
                 throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
-            personData.remove(index);
+            this.personData.remove(index);
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
@@ -65,11 +62,11 @@ public class AddressBook {
             int index = getIndex(mobileNumberToEdit);
             if(index == -1)
                 throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
-            personData.get(index).setAddress(address);
-            personData.get(index).setCity(city);
-            personData.get(index).setState(state);
-            personData.get(index).setZip(zip);
-            personData.get(index).setMobileNumber(mobileNumber);
+            this.personData.get(index).setAddress(address);
+            this.personData.get(index).setCity(city);
+            this.personData.get(index).setState(state);
+            this.personData.get(index).setZip(zip);
+            this.personData.get(index).setMobileNumber(mobileNumber);
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }

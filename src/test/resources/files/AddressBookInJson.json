@@ -1,0 +1,74 @@
+[
+  {
+    "firstName": "Abhi",
+    "lastName": "Pandey",
+    "address": "Rama Colony",
+    "city": "Anantapur",
+    "state": "Gujarat",
+    "zip": 8765432,
+    "mobileNumber": "+91-7965610276"
+  },
+  {
+    "firstName": "Snehita",
+    "lastName": "Naidu",
+    "address": "Anapurna Colony",
+    "city": "Dharmeshwaram",
+    "state": "Karnataka",
+    "zip": 5065432,
+    "mobileNumber": "+91-1234567890"
+  },
+  {
+    "firstName": "Arjun",
+    "lastName": "Chowdary",
+    "address": "Laxmi Colony",
+    "city": "Narsampet",
+    "state": "Sikkim",
+    "zip": 764432,
+    "mobileNumber": "+91-9876543021"
+  },
+  {
+    "firstName": "Sana",
+    "lastName": "Kapoor",
+    "address": "Arya Colony",
+    "city": "Sirpur",
+    "state": "Karnataka",
+    "zip": 144462,
+    "mobileNumber": "+91-6890754321"
+  },
+  {
+    "firstName": "Kiran",
+    "lastName": "Raydu",
+    "address": "SR Colony",
+    "city": "Jangoan",
+    "state": "Manipur",
+    "zip": 384162,
+    "mobileNumber": "+91-1023987654"
+  },
+  {
+    "firstName": "Karan",
+    "lastName": "Shetty",
+    "address": "Teachers Colony",
+    "city": "Magua",
+    "state": "Manyavar",
+    "zip": 781564,
+    "mobileNumber": "+91-7945610243"
+  },
+  {
+    "firstName": "Varun Kumar",
+    "lastName": "Shastri",
+    "address": "Sai Reddy Colony",
+    "city": "Noida",
+    "state": "UP",
+    "zip": 768365,
+    "mobileNumber": "+91-7021610251"
+  },
+  {
+    "firstName": "Shivani",
+    "lastName": "Shastri",
+    "address": "Sai Reddy Colony",
+    "city": "Noida",
+    "state": "UP",
+    "zip": 768365,
+    "mobileNumber": "+91-7021698512"
+  }
+]
