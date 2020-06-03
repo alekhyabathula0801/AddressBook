@@ -10,7 +10,7 @@ public class AddressBook {
 
     enum CompareType {FIRST_NAME,LAST_NAME,ZIP,CITY,STATE}
 
-    public void add(String firstName, String lastName, String address, String city, String state, int zip,
+    public boolean add(String firstName, String lastName, String address, String city, String state, int zip,
                     String mobileNumber) throws AddressBookException {
         try {
             if (firstName == "" | lastName == "" | address == "" | city == "" | state == "" | mobileNumber == "")
@@ -19,6 +19,7 @@ public class AddressBook {
             if (index != -1)
                 throw new AddressBookException("Data Exists", AddressBookException.ExceptionType.DATA_EXISTS);
             this.personData.add(new Person(firstName, lastName, address, city, state, zip, mobileNumber));
+            return true;
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
@@ -41,7 +42,7 @@ public class AddressBook {
                         .orElse(-1);
     }
 
-    public void delete(String mobileNumber) throws AddressBookException {
+    public boolean delete(String mobileNumber) throws AddressBookException {
         try {
             if (mobileNumber == "")
                 throw new AddressBookException("Entered Empty", AddressBookException.ExceptionType.ENTERED_EMPTY);
@@ -49,12 +50,13 @@ public class AddressBook {
             if(index == -1)
                 throw new AddressBookException("Data not found", AddressBookException.ExceptionType.INVALID_DATA);
             this.personData.remove(index);
+            return true;
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
     }
 
-    public void edit(String mobileNumberToEdit, String address, String city, String state, int zip,
+    public boolean edit(String mobileNumberToEdit, String address, String city, String state, int zip,
                      String mobileNumber) throws AddressBookException {
         try {
             if (mobileNumberToEdit == "" | address == "" | city == "" | state == "" | mobileNumber == "")
@@ -67,6 +69,7 @@ public class AddressBook {
             this.personData.get(index).setState(state);
             this.personData.get(index).setZip(zip);
             this.personData.get(index).setMobileNumber(mobileNumber);
+            return true;
         } catch (NullPointerException e) {
             throw new AddressBookException("Entered Null", AddressBookException.ExceptionType.ENTERED_NULL);
         }
